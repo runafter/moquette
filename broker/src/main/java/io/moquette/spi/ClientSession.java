@@ -128,6 +128,7 @@ public class ClientSession {
         if (this.cleanSession) {
             //cleanup topic subscriptions
             cleanSession();
+            m_sessionsStore.clearSession(this.clientID);
         }
 
         //deactivate the session

@@ -220,6 +220,8 @@ public class ProtocolProcessor {
         if (!isSessionAlreadyStored) {
             LOG.info("Create persistent session for clientID <{}>", msg.getClientID());
             clientSession = m_sessionsStore.createNewSession(msg.getClientID(), msg.isCleanSession());
+        } else {
+        	LOG.info("Use old session for clientID <{}> with clean sesson {}", msg.getClientID(), clientSession.cleanSession);
         }
         clientSession.activate();
         if (msg.isCleanSession()) {

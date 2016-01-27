@@ -90,6 +90,7 @@ class MapDBSessionsStore implements ISessionsStore {
         if (LOG.isTraceEnabled()) {
             LOG.trace("Subscription pre wipe: subscriptions_{}: {}", clientID, m_db.getHashMap("subscriptions_" + clientID));
         }
+        LOG.info("wipeSubscriptions {}", clientID);
         m_db.delete("subscriptions_" + clientID);
         if (LOG.isTraceEnabled()) {
             LOG.trace("Subscription post wipe: subscriptions_{}: {}", clientID, m_db.getHashMap("subscriptions_" + clientID));
@@ -131,6 +132,11 @@ class MapDBSessionsStore implements ISessionsStore {
         LOG.debug("clientID {} is a newcome, creating it's empty subscriptions set", clientID);
         m_persistentSessions.putIfAbsent(clientID, new PersistentSession(cleanSession));
         return new ClientSession(clientID, m_messagesStore, this, cleanSession);
+    }
+
+    @Override
+    public boolean clearSession(String clientID) {
+    	return m_persistentSessions.remove(clientID) != null;
     }
 
     @Override

@@ -114,6 +114,10 @@ public class MemorySessionStore implements ISessionsStore {
         m_persistentSessions.put(clientID, new MapDBPersistentStore.PersistentSession(cleanSession));
         return new ClientSession(clientID, m_messagesStore, this, cleanSession);
     }
+    @Override
+    public boolean clearSession(String clientID) {
+    	return m_persistentSessions.remove(clientID) != null;
+    }
 
     @Override
     public ClientSession sessionForClient(String clientID) {
